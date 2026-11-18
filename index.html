@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Test 4 Summit</title>
+<title>Prob &amp; Risk · Test 4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <style>
-:root{--bg:#262624;--bg2:#262624;--card:#30302e;--line:rgba(222,220,209,.12);--ink:#f5f4ee;--soft:#c2c0b6;--mute:#9a988f;--gold:#d97757;--gold2:#d97757;--green:#5fa776;--red:#d9665b;--blue:#d97757;--r:12px}
-:root[data-theme="light"]{--bg:#faf9f5;--bg2:#faf9f5;--card:#ffffff;--line:rgba(31,30,29,.12);--ink:#141413;--soft:#3d3d3a;--mute:#73726c;--gold:#c6613f;--gold2:#c6613f;--green:#3f7d55;--red:#b5443a;--blue:#c6613f}
+:root{--bg:#191919;--bg2:#191919;--card:#242424;--raise:#303030;--line:#3a3a3a;--ink:#ececec;--soft:#c2c0b7;--mute:#9a9893;--gold:#d97757;--gold2:#d97757;--green:#5fa776;--red:#d9665b;--blue:#d97757;--r:12px}
+:root[data-theme="light"]{--bg:#faf9f5;--bg2:#faf9f5;--card:#ffffff;--raise:#f5f4ef;--line:#e2e0d8;--ink:#141413;--soft:#3d3d3a;--mute:#73726c;--gold:#c6613f;--gold2:#c6613f;--green:#3f7d55;--red:#b5443a;--blue:#c6613f}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.6 Inter,system-ui,-apple-system,sans-serif;min-height:100vh}
@@ -50,7 +50,7 @@ details[open].card summary::after{content:"–"}
 .qn{font-family:Inter,system-ui,sans-serif;font-size:13px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:flex;gap:10px;align-items:center}
 .qn .worth{margin-left:auto;color:var(--mute);text-transform:none;letter-spacing:0}
 .ch{display:grid;gap:8px;margin-top:14px}
-.c{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 14px;font-family:"Source Serif 4",Georgia,serif;font-size:17px;transition:transform .12s,border-color .2s,background .2s}
+.c{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--raise);border-radius:10px;padding:10px 14px;font-family:"Source Serif 4",Georgia,serif;font-size:17px;transition:transform .12s,border-color .2s,background .2s}
 .c:hover{border-color:var(--gold);transform:translateX(3px)}
 .c .L{font-family:Inter,system-ui,sans-serif;font-size:13px;font-weight:500;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);flex:none}
 .c.bad{border-color:var(--red);background:color-mix(in srgb,var(--red) 14%,transparent);animation:shake .35s}
@@ -84,9 +84,9 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:15}
 <canvas id="fx"></canvas>
 <header class="top">
 <div class="topin">
-<div class="brand">Test 4 <span>Summit</span></div>
+<div class="brand">Prob &amp; Risk <span>· Test 4</span></div>
 <div class="stats">
-<div class="pill">Lvl <b id="lvl">1</b> <span id="lvlname" style="color:var(--soft)">Bunny Hill</span></div>
+<div class="pill">Lvl <b id="lvl">1</b> <span id="lvlname" style="color:var(--soft)">Rookie</span></div>
 <div class="pill">XP <b id="xp">0</b></div>
 <div class="pill">Streak <b id="streak">0</b></div>
 <div class="pill">Solved <b id="solved">0</b>/<span id="total">0</span></div>
@@ -331,7 +331,7 @@ const SECTIONS=[
  ]}
 ]}
 ];
-const LEVELS=["Bunny Hill","Green Circle","Blue Square","Black Diamond","Double Black","Summit"];
+const LEVELS=["Rookie","Analyst","Actuary I","Actuary II","Chief Actuary","Risk Master"];
 const KEY="probRiskT4_v1";
 let st={xp:0,streak:0,best:0,done:{},cur:"A1",idx:{}};
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s)st=Object.assign(st,s);}catch(e){}
@@ -348,7 +348,7 @@ function side(){const el=$("side");el.innerHTML="";SECTIONS.forEach(s=>{const id
  const d=document.createElement("div");d.className="sec";d.innerHTML=`<div class="sech"><h3>${s.title}</h3><small>${ok}/${ids.length}</small></div><div class="sbar"><i style="width:${ok/ids.length*100}%"></i></div>`;
  s.types.forEach(t=>{const n=t.probs.length,k=t.probs.filter((p,i)=>st.done[t.id+"."+(i+1)]).length;const b=document.createElement("button");b.className="type"+(t.id===st.cur?" on":"")+(k===n?" done":"");b.innerHTML=`<span>${t.id} · ${t.title}</span><em>${k===n?"✓":k+"/"+n}</em>`;b.onclick=()=>{st.cur=t.id;save();show();};d.appendChild(b);});el.appendChild(d);});}
 function badges(){const el=$("badges");el.innerHTML="";const list=SECTIONS.map(s=>{const ids=[];s.types.forEach(t=>t.probs.forEach((p,i)=>ids.push(t.id+"."+(i+1))));return[s.title.split("·")[1].trim()+" cleared",ids.every(i=>st.done[i]==="ok")];});
- list.push(["Streak of 5",st.best>=5],["Streak of 10",st.best>=10],["Black Diamond",st.xp>=180],["Summit",Object.values(st.done).filter(v=>v==="ok").length===ALL.length]);
+ list.push(["Streak of 5",st.best>=5],["Streak of 10",st.best>=10],["180 XP club",st.xp>=180],["All 30 solved",Object.values(st.done).filter(v=>v==="ok").length===ALL.length]);
  list.forEach(([n,g])=>{const b=document.createElement("span");b.className="bdg"+(g?" got":"");b.textContent=(g?"★ ":"☆ ")+n;el.appendChild(b);});}
 function show(){const[s,t]=typeById(st.cur);const i=Math.min(st.idx[t.id]||0,t.probs.length-1);const p=t.probs[i];const pid=t.id+"."+(i+1);
  attempt={tries:0,hinted:false,over:!!st.done[pid]};
