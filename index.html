@@ -258,19 +258,6 @@ const SECTIONS=[
   c:["0.0548","0.0808","0.1151","0.4364","0.9452"],a:0,
   h:R`SD of the average is \(500/\sqrt{100}\).`,
   s:R`$$\sigma_{\bar X}=50,\ z=\frac{80}{50}=1.6,\ \ 1-\Phi(1.6)=0.0548$$`}
- ]},
- {id:"B4",title:"Lognormal",setup:R`\(Y=e^X\) with \(X\sim N(\mu,\sigma^2)\):
- $$P(Y\le y)=\Phi\Big(\frac{\ln y-\mu}{\sigma}\Big),\qquad E[Y]=e^{\mu+\sigma^2/2}$$
- $$\operatorname{Var}(Y)=e^{2\mu+\sigma^2}\big(e^{\sigma^2}-1\big)$$`,
- probs:[
-  {q:R`Claim severity is lognormal; the normal exponent has mean \(6.8\) and standard deviation \(0.6\). Calculate the probability that a claim exceeds \(1750\).`,
-  c:["0.0838","0.1330","0.2266","0.4207","0.8670"],a:1,
-  h:R`Take \(\ln 1750\) and standardize it.`,
-  s:R`$$z=\frac{\ln 1750-6.8}{0.6}=\frac{7.467-6.8}{0.6}=1.11$$ $$1-\Phi(1.11)=0.133$$`},
-  {q:R`\(Y=e^X\) where \(X\) is normal with \(\mu=5\) and \(\sigma=0.4\). Calculate \(E[Y]\).`,
-  c:["148.4","153.3","160.8","165.1","221.4"],a:2,
-  h:R`\(E[Y]=e^{\mu+\sigma^2/2}\). Watch that \(\sigma^2=0.16\).`,
-  s:R`$$E[Y]=e^{5+0.08}=e^{5.08}=160.8$$`}
  ]}
 ]},
 {id:"C",title:"C · Exponential and uniform",types:[
@@ -348,7 +335,7 @@ function side(){const el=$("side");el.innerHTML="";SECTIONS.forEach(s=>{const id
  const d=document.createElement("div");d.className="sec";d.innerHTML=`<div class="sech"><h3>${s.title}</h3><small>${ok}/${ids.length}</small></div><div class="sbar"><i style="width:${ok/ids.length*100}%"></i></div>`;
  s.types.forEach(t=>{const n=t.probs.length,k=t.probs.filter((p,i)=>st.done[t.id+"."+(i+1)]).length;const b=document.createElement("button");b.className="type"+(t.id===st.cur?" on":"")+(k===n?" done":"");b.innerHTML=`<span>${t.id} · ${t.title}</span><em>${k===n?"✓":k+"/"+n}</em>`;b.onclick=()=>{st.cur=t.id;save();show();};d.appendChild(b);});el.appendChild(d);});}
 function badges(){const el=$("badges");el.innerHTML="";const list=SECTIONS.map(s=>{const ids=[];s.types.forEach(t=>t.probs.forEach((p,i)=>ids.push(t.id+"."+(i+1))));return[s.title.split("·")[1].trim()+" cleared",ids.every(i=>st.done[i]==="ok")];});
- list.push(["Streak of 5",st.best>=5],["Streak of 10",st.best>=10],["180 XP club",st.xp>=180],["All 30 solved",Object.values(st.done).filter(v=>v==="ok").length===ALL.length]);
+ list.push(["Streak of 5",st.best>=5],["Streak of 10",st.best>=10],["180 XP club",st.xp>=180],["All solved",Object.values(st.done).filter(v=>v==="ok").length===ALL.length]);
  list.forEach(([n,g])=>{const b=document.createElement("span");b.className="bdg"+(g?" got":"");b.textContent=(g?"★ ":"☆ ")+n;el.appendChild(b);});}
 function show(){const[s,t]=typeById(st.cur);const i=Math.min(st.idx[t.id]||0,t.probs.length-1);const p=t.probs[i];const pid=t.id+"."+(i+1);
  attempt={tries:0,hinted:false,over:!!st.done[pid]};
