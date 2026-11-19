@@ -326,7 +326,7 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
 let attempt={tries:0,hinted:false,over:false};
 const $=id=>document.getElementById(id);
 const ALL=[];SECTIONS.forEach(s=>s.types.forEach(t=>t.probs.forEach((p,i)=>ALL.push(t.id+"."+(i+1)))));
-const typeById=id=>{for(const s of SECTIONS)for(const t of s.types)if(t.id===id)return[s,t];};
+const typeById=id=>{for(const s of SECTIONS)for(const t of s.types)if(t.id===id)return[s,t];st.cur=SECTIONS[0].types[0].id;return[SECTIONS[0],SECTIONS[0].types[0]];};
 function math(el){renderMathInElement(el,{delimiters:[{left:"$$",right:"$$",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});}
 function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("show"),1800);}
 function hud(){const lv=Math.min(LEVELS.length-1,Math.floor(st.xp/60));$("lvl").textContent=lv+1;$("lvlname").textContent=LEVELS[lv];$("xp").textContent=st.xp;$("streak").textContent=st.streak;
